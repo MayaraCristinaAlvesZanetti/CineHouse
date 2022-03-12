@@ -27,7 +27,7 @@ function adicionarFilme(
 adicionarFilme(
   3,
   "Harry Potter",
-  150,
+  60 * 4,
   ["Daniel Radcliffe", "Emma", "Huppert"],
   2001,
   false
@@ -38,38 +38,33 @@ adicionarFilme(
 function buscarFilme(Codigo) {
   for (let index = 0; index < catalogo.length; index++) {
     if (catalogo[index].codigo == Codigo) {
-      console.log(
-        "Codigo: " +
-          catalogo[index].codigo +
-          ", Titulo: " +
-          catalogo[index].titulo
-      );
+      return catalogo[index];
     }
   }
 }
 //buscarFilme(3);
 
-function alterarStatusEmCartaz(Codigo) {
-  for (let i = 0; i < catalogo.length; i++) {
-    if (catalogo[i].codigo == Codigo) {
-      catalogo[i].emCartaz = !catalogo[i].emCartaz;
-      console.log(catalogo[i]);
-    }
-  }
+function alterarStatusEmCartaz(Codigo, Callbackfn) {
+  const objeto = Callbackfn(Codigo);
+  objeto.emCartaz = !objeto.emCartaz;
+  return objeto;
 }
+//console.log(alterarStatusEmCartaz(1, buscarFilme));
 //alterarStatusEmCartaz(3);
 
 function listarTodosOsFilmes(catalogo) {
-  for (let i = 0; i < catalogo.length; i++) {
+  catalogo.forEach((filme) =>
     console.log(`
-    Titulo: ${catalogo[i].titulo}
-    Duração: ${catalogo[i].duracao}
-    Atores: ${catalogo[i].atores}
-    Ano de Lançamento: ${catalogo[i].anoDeLancamento}
-    Em Cartaz: ${catalogo[i].emCartaz ? "sim" : "não"}
-    `);
-  }
+  Titulo: ${filme.titulo}
+  Duração: ${filme.duracao}
+  Atores: ${filme.atores}
+  Ano de Lançamento: ${filme.anoDeLancamento}
+  Em Cartaz: ${filme.emCartaz ? "sim" : "não"}
+`)
+  );
+  return "";
 }
+console.log(listarTodosOsFilmes(catalogo));
 
 //listarTodosOsFilmes(catalogo);
 
@@ -98,5 +93,11 @@ function alterarStatusEmCartazTernario(Codigo) {
     }
   }
 }
-alterarStatusEmCartazTernario(3);
-console.log(catalogo);
+//alterarStatusEmCartazTernario(3);
+//console.log(catalogo);
+
+function listarFilmesDeLongaDuracao() {
+  const novoArray = catalogo.filter((valor) => valor.duracao >= 60 * 2);
+  return novoArray;
+}
+//console.log(listarFilmesDeLongaDuracao());
